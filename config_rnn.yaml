@@ -1,0 +1,14 @@
+data:
+  path: "./cleaned"
+  seq_len: 32
+  batch_size: 32
+  is_generation: False
+
+model:
+  lr: 0.001
+  hidden_size: 256
+  note_emb_size: 100
+  dur_emb_size: 100
+  use_lstm: False # defaults to GRU
+  num_recurrent_layers: 2
+  sampling_temperature: 0

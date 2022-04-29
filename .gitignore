@@ -1,0 +1,9 @@
+/__pycache__
+/checkpoints*
+/cleaned
+/data
+/lightning_logs
+/logs_seq2seq
+/models/__pycache__
+/lightning/__pycache__
+

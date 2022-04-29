@@ -1,0 +1,21 @@
+data:
+  path: "./cleaned"
+  seq_len: 32
+  batch_size: 32
+  is_generation: True
+
+model:
+  lr: 0.001
+  encoder:
+    num_recurrent_layers: 2
+    hidden_size: 256
+    note_emb_size: 100
+    dur_emb_size: 100
+    use_lstm: False
+  decoder:
+    num_recurrent_layers: 2
+    hidden_size: 256
+    note_emb_size: 100
+    dur_emb_size: 100
+    use_lstm: False
+  sampling_temperature: 0
