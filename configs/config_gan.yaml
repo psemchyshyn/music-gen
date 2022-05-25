@@ -1,0 +1,14 @@
+data:
+  path: "./cleaned/Jsb16thSeparated.npz"
+  seq_len: 32
+  batch_size: 32
+  is_generation: True
+
+model:
+  lr_disc: 0.0004
+  lr_gen: 0.0001
+  latent_size: 512
+  n_critic: 5 # num of disriminator updates for 1 generator update
+  b1: 0.5
+  b2: 0.999
+  lambda_gp: 10 # gradient penalty coef

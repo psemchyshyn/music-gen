@@ -1,6 +1,6 @@
 import pytorch_lightning as pl
 from torch.utils.data import random_split, DataLoader
-from lightning.dataset import MusicDataset, MusicDatasetExt
+from lightning.dataset import MusicDataset, MusicDatasetExt, MusicDatasetCNN
 
 class MusicDataWrapper(pl.LightningDataModule):
     def __init__(self, config):
@@ -20,6 +20,26 @@ class MusicDataWrapper(pl.LightningDataModule):
 
         self.num_notes_classes = self.dataset.num_notes_classes
         self.num_duration_classes =  self.dataset.num_duration_classes
+
+    def train_dataloader(self):
+        return DataLoader(self.ds_train, batch_size=self.batch_size, pin_memory=True, shuffle=True)
+
+    def val_dataloader(self):
+        return DataLoader(self.ds_val, batch_size=self.batch_size, pin_memory=True)
+
+    def test_dataloader(self):
+        return DataLoader(self.ds_test, batch_size=self.batch_size, pin_memory=True)
+
+class MusicDataWrapperCNN(pl.LightningDataModule):
+    def __init__(self, config):
+        super().__init__()
+        self.path = config["data"]["path"]
+        self.batch_size = config["data"]["batch_size"]
+        self.seq_len = config["data"]["seq_len"]
+
+        self.ds_train = MusicDatasetCNN(self.path, "train", self.seq_len)
+        self.ds_val = MusicDatasetCNN(self.path, "valid", self.seq_len)
+        self.ds_test = MusicDatasetCNN(self.path, "test", self.seq_len)
 
     def train_dataloader(self):
         return DataLoader(self.ds_train, batch_size=self.batch_size, pin_memory=True, shuffle=True)

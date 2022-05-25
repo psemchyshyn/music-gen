@@ -123,7 +123,4 @@ class Seq2Seq(nn.Module):
 
         return decoder_output_notes, decoder_output_durs
 
-        
-
-
-
+    

@@ -1,0 +1,9 @@
+data:
+  path: "./cleaned/Jsb16thSeparated.npz"
+  seq_len: 32
+  batch_size: 32
+  is_generation: True
+
+model:
+  lr: 0.001
+  latent_size: 64

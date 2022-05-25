@@ -99,3 +99,43 @@ class MusicDatasetExt(MusicDataset):
             else:
                 i += self.seq_len
 
+
+class MusicDatasetCNN(Dataset):
+    def __init__(self, path, mode="train", seq_len=32):
+        self.path = path
+        self.seq_len = seq_len
+        self.mode = mode
+        self.rest_idx = 82
+        self.num_classes = self.rest_idx + 1
+        self.prepare_data(path, mode)
+
+    def __len__(self):
+        return len(self.notes_x)
+
+    def __getitem__(self, idx):
+        notes_x = self.notes_x[idx]
+        notes_y = self.notes_y[idx]
+        
+        notes_x = torch.stack(tuple([torch.nn.functional.one_hot(torch.tensor(note).long(), self.num_classes) for note in notes_x]))
+        notes_y = torch.stack(tuple([torch.nn.functional.one_hot(torch.tensor(note).long(), self.num_classes) for note in notes_y]))
+
+        return notes_x.permute(1, 2, 0).float(), notes_y.permute(1, 2, 0).float()
+
+    def prepare_data(self, path, mode):
+        with np.load(path, encoding='bytes', allow_pickle=True) as f:
+            self.data = f[mode]
+
+        i = 0
+
+        self.notes_x = []
+        self.notes_y = []
+
+        for song in self.data:
+            is_nan = np.where(np.isnan(song))
+            song[is_nan] = self.rest_idx
+            song = song.astype(np.uint8)
+
+            while i < len(song) - 2*self.seq_len:
+                self.notes_x.append(song[i: i + self.seq_len])
+                self.notes_y.append(song[i + self.seq_len: i + 2*self.seq_len])
+                i += 1

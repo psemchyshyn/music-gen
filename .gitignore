@@ -2,8 +2,7 @@
 /checkpoints*
 /cleaned
 /data
-/lightning_logs
-/logs_seq2seq
+/logs*
 /models/__pycache__
 /lightning/__pycache__
-
+/todo.txt
