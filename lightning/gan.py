@@ -87,12 +87,6 @@ class MuseGAN(pl.LightningModule):
     def training_step(self, batch, batch_idx, optimizer_idx):
         return self.step(batch, optimizer_idx, "train")
 
-    def validation_step(self, batch, batch_idx, optimizer_idx):
-        return self.step(batch, optimizer_idx, "valid")
-
-    def test_step(self, batch, batch_idx, optimizer_idx):
-        return self.step(batch, optimizer_idx, "test")
-
     def configure_optimizers(self):
 
         opt_g = torch.optim.Adam(self.generator.parameters(), lr=self.lr_gen, betas=(self.b1, self.b2))

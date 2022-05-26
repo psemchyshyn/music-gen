@@ -18,13 +18,14 @@ if __name__ == "__main__":
 
     checkpoint_callback = ModelCheckpoint(
         monitor="train_disc_loss",
-        dirpath="checkpoints_gan/",
+        dirpath="checkpoints_gans/",
         filename="model-{epoch:02d}-{train_disc_loss:.2f}",
-        save_top_k=1,
-        every_n_epochs=1,
+        save_top_k=10,
+        every_n_epochs=20,
+        save_last=True,
         save_on_train_epoch_end=True,
         mode="min",
-    )
+    ) 
 
     estopping_callback = EarlyStopping(monitor="train_disc_loss", patience=10)
 
